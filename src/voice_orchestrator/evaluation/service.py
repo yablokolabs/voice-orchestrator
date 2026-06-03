@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import structlog
 
 from voice_orchestrator.domain.interfaces.repositories import (
@@ -51,7 +53,7 @@ class EvaluationService:
 
         return metrics
 
-    async def compute_quality_report(self) -> dict:
+    async def compute_quality_report(self) -> dict[str, Any]:
         """Compare AI output against human corrections."""
         corrected = await self._feedback_repo.list_by_status(FeedbackStatus.CORRECTED, 10000)
 

@@ -40,7 +40,7 @@ class AssemblyAIProvider(SpeechProvider):
         audio_data: bytes,
         audio_format: str,
         language: str = "en",
-        **kwargs,
+        **kwargs: Any,
     ) -> TranscriptionResult:
         headers = {"Authorization": self._api_key}
 

@@ -15,7 +15,7 @@ router = APIRouter(tags=["pipeline"])
 
 
 @router.post("/transcribe", response_model=TranscriptionResponse)
-async def transcribe(request: TranscribeRequest):
+async def transcribe(request: TranscribeRequest) -> TranscriptionResponse:
     """Transcribe an audio file to text."""
     # In production, this would use DI to get the TranscriptionService
     # with the configured provider. Placeholder for DI wiring.
@@ -23,7 +23,7 @@ async def transcribe(request: TranscribeRequest):
 
 
 @router.post("/extract-actions", response_model=ExtractionResponse)
-async def extract_actions(request: ExtractActionsRequest):
+async def extract_actions(request: ExtractActionsRequest) -> ExtractionResponse:
     """Extract structured actions from text or audio."""
     if not request.text and not request.audio_file_id:
         raise HTTPException(

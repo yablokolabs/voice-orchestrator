@@ -5,6 +5,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -55,7 +56,7 @@ class AudioFile(BaseModel):
     duration_seconds: float | None = None
     storage_path: str
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
-    metadata: dict = Field(default_factory=dict)
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class TranscriptionResult(BaseModel):
@@ -70,7 +71,7 @@ class TranscriptionResult(BaseModel):
     word_count: int = 0
     language: str = "en"
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    raw_response: dict = Field(default_factory=dict)
+    raw_response: dict[str, Any] = Field(default_factory=dict)
 
 
 class Action(BaseModel):
@@ -81,7 +82,7 @@ class Action(BaseModel):
     message: str | None = None
     subject: str | None = None
     location: str | None = None
-    extra: dict = Field(default_factory=dict)
+    extra: dict[str, Any] = Field(default_factory=dict)
 
 
 class ExtractionResult(BaseModel):
@@ -98,7 +99,7 @@ class ExtractionResult(BaseModel):
     output_tokens: int
     cost_usd: float
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    raw_response: dict = Field(default_factory=dict)
+    raw_response: dict[str, Any] = Field(default_factory=dict)
 
 
 class PipelineResult(BaseModel):

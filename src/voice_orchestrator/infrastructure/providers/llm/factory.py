@@ -42,4 +42,4 @@ class LLMProviderFactory:
             raise ValueError(
                 f"Unknown LLM provider '{provider_name}'. Available: {available}"
             )
-        return provider_cls(settings)
+        return provider_cls(settings)  # type: ignore[call-arg]

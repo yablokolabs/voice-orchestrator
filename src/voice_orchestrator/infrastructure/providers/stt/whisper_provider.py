@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import io
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import openai
 
@@ -35,7 +35,7 @@ class WhisperProvider(SpeechProvider):
         audio_data: bytes,
         audio_format: str,
         language: str = "en",
-        **kwargs,
+        **kwargs: Any,
     ) -> TranscriptionResult:
         filename = f"audio.{audio_format}"
         audio_file = io.BytesIO(audio_data)

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 
 from voice_orchestrator.domain.models.core import Action
 
@@ -52,7 +53,7 @@ class RegressionResult:
     passed: bool = True
     transcription_metrics: TranscriptionMetrics = field(default_factory=TranscriptionMetrics)
     extraction_metrics: ExtractionMetrics = field(default_factory=ExtractionMetrics)
-    details: dict = field(default_factory=dict)
+    details: dict[str, Any] = field(default_factory=dict)
 
 
 def compute_wer(reference: str, hypothesis: str) -> float:

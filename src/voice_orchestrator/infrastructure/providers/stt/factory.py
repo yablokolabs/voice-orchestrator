@@ -42,4 +42,4 @@ class STTProviderFactory:
             raise ValueError(
                 f"Unknown STT provider '{provider_name}'. Available: {available}"
             )
-        return provider_cls(settings)
+        return provider_cls(settings)  # type: ignore[call-arg]

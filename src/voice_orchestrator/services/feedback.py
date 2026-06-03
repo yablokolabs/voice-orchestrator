@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import structlog
 
 from voice_orchestrator.domain.interfaces.repositories import (
@@ -59,7 +61,7 @@ class FeedbackService:
     async def get_by_extraction(self, extraction_id: str) -> Feedback | None:
         return await self._feedback_repo.get_by_extraction_id(extraction_id)
 
-    async def compute_agreement_rate(self) -> dict:
+    async def compute_agreement_rate(self) -> dict[str, Any]:
         approved = await self._feedback_repo.list_by_status(FeedbackStatus.APPROVED, 10000)
         rejected = await self._feedback_repo.list_by_status(FeedbackStatus.REJECTED, 10000)
         corrected = await self._feedback_repo.list_by_status(FeedbackStatus.CORRECTED, 10000)

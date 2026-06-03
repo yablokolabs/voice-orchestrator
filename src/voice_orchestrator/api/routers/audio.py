@@ -13,7 +13,7 @@ router = APIRouter(prefix="/audio", tags=["audio"])
 
 
 @router.post("/upload", response_model=AudioUploadResponse)
-async def upload_audio(file: UploadFile):
+async def upload_audio(file: UploadFile) -> AudioUploadResponse:
     """Upload an audio file for processing."""
     if not file.filename:
         raise HTTPException(status_code=400, detail="Filename required")

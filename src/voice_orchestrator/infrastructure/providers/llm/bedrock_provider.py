@@ -39,7 +39,7 @@ class BedrockProvider(LLMProvider):
         system_prompt: str | None = None,
         temperature: float = 0.0,
         max_tokens: int = 1024,
-        **kwargs,
+        **kwargs: Any,
     ) -> ExtractionResult:
         body = self._build_request_body(prompt, system_prompt, temperature, max_tokens)
 
@@ -112,7 +112,7 @@ class BedrockProvider(LLMProvider):
     @staticmethod
     def _parse_response_body(response: dict[str, Any]) -> dict[str, Any]:
         try:
-            return json.loads(response["body"].read())
+            return json.loads(response["body"].read())  # type: ignore[no-any-return]
         except (KeyError, json.JSONDecodeError) as exc:
             raise ExtractionError("bedrock", f"Failed to parse response body: {exc}") from exc
 

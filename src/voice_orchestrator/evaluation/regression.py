@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 
 import structlog
 
@@ -29,7 +30,7 @@ class RegressionReport:
     total_latency_ms: float = 0.0
     total_cost_usd: float = 0.0
     results: list[RegressionResult] = field(default_factory=list)
-    config: dict = field(default_factory=dict)
+    config: dict[str, Any] = field(default_factory=dict)
 
     @property
     def pass_rate(self) -> float:

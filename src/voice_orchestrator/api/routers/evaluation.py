@@ -15,7 +15,7 @@ router = APIRouter(tags=["evaluation"])
 
 
 @router.post("/evaluate", response_model=EvaluationResponse)
-async def evaluate(request: EvaluateRequest):
+async def evaluate(request: EvaluateRequest) -> EvaluationResponse:
     """Evaluate an extraction against expected actions."""
     # Placeholder — in production, this pulls from DB
     return EvaluationResponse(
@@ -28,12 +28,12 @@ async def evaluate(request: EvaluateRequest):
 
 
 @router.get("/metrics", response_model=MetricsResponse)
-async def get_metrics():
+async def get_metrics() -> MetricsResponse:
     """Get pipeline production metrics."""
     return MetricsResponse()
 
 
 @router.get("/providers/compare", response_model=ProviderCompareResponse)
-async def compare_providers():
+async def compare_providers() -> ProviderCompareResponse:
     """Compare performance across STT and LLM providers."""
     return ProviderCompareResponse(results=[])

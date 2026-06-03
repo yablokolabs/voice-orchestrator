@@ -52,13 +52,13 @@ class ResilientSpeechProvider(SpeechProvider):
             return await self._provider.transcribe(audio_data, audio_format, language, **kwargs)
 
         async def _with_cb() -> TranscriptionResult:
-            return await self._cb_registry.execute(self._provider.name, _call)
+            return await self._cb_registry.execute(self._provider.name, _call)  # type: ignore[no-any-return]
 
         async def _with_timeout() -> TranscriptionResult:
-            return await self._timeout.execute(_with_cb, operation=f"{self.name}.transcribe")
+            return await self._timeout.execute(_with_cb, operation=f"{self.name}.transcribe")  # type: ignore[no-any-return]
 
         try:
-            return await self._retry.execute(_with_timeout)
+            return await self._retry.execute(_with_timeout)  # type: ignore[no-any-return]
         except CircuitOpenError:
             raise
         except Exception as exc:
@@ -117,13 +117,13 @@ class ResilientLLMProvider(LLMProvider):
             )
 
         async def _with_cb() -> ExtractionResult:
-            return await self._cb_registry.execute(self._provider.name, _call)
+            return await self._cb_registry.execute(self._provider.name, _call)  # type: ignore[no-any-return]
 
         async def _with_timeout() -> ExtractionResult:
-            return await self._timeout.execute(_with_cb, operation=f"{self.name}.generate")
+            return await self._timeout.execute(_with_cb, operation=f"{self.name}.generate")  # type: ignore[no-any-return]
 
         try:
-            return await self._retry.execute(_with_timeout)
+            return await self._retry.execute(_with_timeout)  # type: ignore[no-any-return]
         except CircuitOpenError:
             raise
         except Exception as exc:

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Any
 
 from voice_orchestrator.domain.models.core import ExtractionResult, TranscriptionResult
 
@@ -21,7 +22,7 @@ class SpeechProvider(ABC):
         audio_data: bytes,
         audio_format: str,
         language: str = "en",
-        **kwargs,
+        **kwargs: Any,
     ) -> TranscriptionResult:
         """Transcribe audio data to text.
 
@@ -50,7 +51,7 @@ class LLMProvider(ABC):
         system_prompt: str | None = None,
         temperature: float = 0.0,
         max_tokens: int = 1024,
-        **kwargs,
+        **kwargs: Any,
     ) -> ExtractionResult:
         """Generate a structured extraction from a prompt.
 

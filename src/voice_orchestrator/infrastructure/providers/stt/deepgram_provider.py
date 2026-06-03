@@ -46,7 +46,7 @@ class DeepgramProvider(SpeechProvider):
         audio_data: bytes,
         audio_format: str,
         language: str = "en",
-        **kwargs,
+        **kwargs: Any,
     ) -> TranscriptionResult:
         content_type = _CONTENT_TYPES.get(audio_format, f"audio/{audio_format}")
         headers = {

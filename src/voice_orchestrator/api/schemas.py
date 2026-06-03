@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -152,11 +153,11 @@ class MetricsResponse(BaseModel):
     success_rate: float = 0.0
     avg_latency_ms: float = 0.0
     avg_cost_usd: float = 0.0
-    by_provider: dict = Field(default_factory=dict)
+    by_provider: dict[str, Any] = Field(default_factory=dict)
 
 
 class ProviderCompareResponse(BaseModel):
-    results: list[dict]
+    results: list[dict[str, Any]]
 
 
 class HealthResponse(BaseModel):

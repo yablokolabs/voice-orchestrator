@@ -37,7 +37,7 @@ class OpenAIProvider(LLMProvider):
         system_prompt: str | None = None,
         temperature: float = 0.0,
         max_tokens: int = 1024,
-        **kwargs,
+        **kwargs: Any,
     ) -> ExtractionResult:
         messages: list[dict[str, str]] = []
         if system_prompt:
@@ -48,7 +48,7 @@ class OpenAIProvider(LLMProvider):
         try:
             response = await self._client.chat.completions.create(
                 model=self._model,
-                messages=messages,
+                messages=messages,  # type: ignore[arg-type]
                 temperature=temperature,
                 max_tokens=max_tokens,
             )

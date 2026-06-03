@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
     AsyncSession,
     async_sessionmaker,
     create_async_engine,
@@ -13,7 +14,7 @@ from sqlalchemy.ext.asyncio import (
 from voice_orchestrator.config import get_settings
 
 
-def build_engine():
+def build_engine() -> AsyncEngine:
     settings = get_settings()
     return create_async_engine(
         settings.database_url,

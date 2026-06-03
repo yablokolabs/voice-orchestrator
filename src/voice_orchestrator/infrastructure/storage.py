@@ -28,7 +28,7 @@ class LocalAudioStorage(AudioStorage):
 
     async def retrieve(self, storage_path: str) -> bytes:
         async with aiofiles.open(storage_path, "rb") as f:
-            return await f.read()
+            return await f.read()  # type: ignore[no-any-return]
 
     async def delete(self, storage_path: str) -> None:
         path = Path(storage_path)

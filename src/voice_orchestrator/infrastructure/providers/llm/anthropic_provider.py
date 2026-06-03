@@ -37,7 +37,7 @@ class AnthropicProvider(LLMProvider):
         system_prompt: str | None = None,
         temperature: float = 0.0,
         max_tokens: int = 1024,
-        **kwargs,
+        **kwargs: Any,
     ) -> ExtractionResult:
         request_kwargs: dict[str, Any] = {
             "model": self._model,

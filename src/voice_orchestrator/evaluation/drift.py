@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass, field
+from typing import Any
 
 from voice_orchestrator.domain.models.core import ExtractionResult
 
@@ -17,7 +18,7 @@ class DriftReport:
     intent_distribution_baseline: dict[str, float] = field(default_factory=dict)
     missing_fields_rate: float = 0.0
     new_fields_rate: float = 0.0
-    details: dict = field(default_factory=dict)
+    details: dict[str, Any] = field(default_factory=dict)
 
 
 class DriftDetector:

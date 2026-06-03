@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
@@ -32,7 +34,7 @@ def setup_telemetry(settings: Settings) -> None:
     trace.set_tracer_provider(provider)
 
 
-def instrument_fastapi(app) -> None:
+def instrument_fastapi(app: Any) -> None:
     """Instrument FastAPI app with OpenTelemetry."""
     FastAPIInstrumentor.instrument_app(app)
 
@@ -42,7 +44,7 @@ def instrument_httpx() -> None:
     HTTPXClientInstrumentor().instrument()
 
 
-def instrument_sqlalchemy(engine) -> None:
+def instrument_sqlalchemy(engine: Any) -> None:
     """Instrument SQLAlchemy engine."""
     SQLAlchemyInstrumentor().instrument(engine=engine.sync_engine)
 
