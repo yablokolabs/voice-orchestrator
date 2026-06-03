@@ -92,15 +92,24 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [build]
-    if: >-
-      github.event_name == 'push' &&
-      github.ref == 'refs/heads/main' &&
-      secrets.AWS_ACCESS_KEY_ID != ''
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment: production
     steps:
+      - name: Check AWS credentials
+        id: aws-check
+        run: |
+          if [ -n "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "has_creds=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_creds=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping deploy — AWS credentials not configured"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.aws-check.outputs.has_creds == 'true'
 
       - name: Configure AWS credentials
+        if: steps.aws-check.outputs.has_creds == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -108,10 +117,12 @@ jobs:
           aws-region: us-east-1
 
       - name: Login to Amazon ECR
+        if: steps.aws-check.outputs.has_creds == 'true'
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push image to Amazon ECR
+        if: steps.aws-check.outputs.has_creds == 'true'
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: voice-orchestrator
@@ -121,6 +132,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to ECS
+        if: steps.aws-check.outputs.has_creds == 'true'
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
